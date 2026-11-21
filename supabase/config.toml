@@ -1,0 +1,4 @@
+project_id = "rodas-smart-sales-management"
+
+[functions.team-members]
+verify_jwt = false
