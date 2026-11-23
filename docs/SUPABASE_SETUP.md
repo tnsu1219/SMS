@@ -1,8 +1,8 @@
 # Supabase setup
 
-1. Make sure the project URL in `.env.local` is the same Supabase project whose
+1. Make sure the project URL in `frontend/.env.local` is the same Supabase project whose
    SQL Editor you are using. Run the migrations in
-   `supabase/migrations` in filename order:
+   `database/migrations` in filename order:
    `202611170001_initial_schema.sql`,
    `202611180001_inventory_foundations.sql`,
    `202611180002_admin_bootstrap.sql`,
@@ -21,7 +21,7 @@
    applying the migration, run `NOTIFY pgrst, 'reload schema';` in the SQL
    Editor and wait a few seconds.
 2. In **Project Settings → API**, copy the Project URL and the publishable key.
-   Copy `.env.example` to `.env.local` and set `VITE_SUPABASE_URL` and
+   Copy `frontend/.env.example` to `frontend/.env.local` and set `VITE_SUPABASE_URL` and
    `VITE_SUPABASE_PUBLISHABLE_KEY`.
 3. Keep Supabase email/password authentication enabled. Set the site URL and
    allowed redirect URLs for your local and deployed app in **Authentication →
@@ -30,15 +30,15 @@
    the application header. English and Amharic are supported, and the browser
    remembers the selected language. Dates, numbers, and currency displays use
    the selected language's regional formatting and the organization's currency.
-4. Run `npm run dev`. If there are no existing profiles, in Supabase Dashboard
+4. Run `cd frontend && npm install && npm run dev`. If there are no existing profiles, in Supabase Dashboard
    open **Authentication → Users → Add user** and create the initial
    administrator with the email and password you want to use. Confirm the
    email if prompted. The database trigger creates the organization, admin
    profile, and first branch. If you already had a profile, sign in with that
    existing account instead.
-5. Deploy `supabase/functions/team-members/index.ts` as the `team-members`
+5. Deploy `backend/supabase/functions/team-members/index.ts` as the `team-members`
    Edge Function. Keep gateway JWT verification disabled as configured in
-   `supabase/config.toml` so unauthenticated CORS preflight requests can reach
+   `backend/supabase/config.toml` so unauthenticated CORS preflight requests can reach
    the function; it independently validates each bearer token with Supabase
    Auth and checks the caller's administrator profile. Configure
    `SUPABASE_SERVICE_ROLE_KEY` as an Edge Function secret (never as a `VITE_`
